@@ -1,15 +1,25 @@
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class NeuThread extends Thread {
 
-    private char a ;
+    private final Lock lock = new ReentrantLock();
 
-    public NeuThread(char a) {
+
+    private int a;
+
+    public NeuThread(int a) {
         this.a = a;
     }
 
     @Override
-    public void run(){
-        for (int i = 0; i < 100; i++) {
-            System.out.println(a);
+    public void run() {
+        try {
+            lock.lock();
+            System.out.println(a += 100);
+        } finally {
+            lock.unlock();
+
         }
     }
 }
